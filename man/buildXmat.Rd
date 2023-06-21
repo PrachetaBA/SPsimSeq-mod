@@ -2,7 +2,7 @@
 % Please edit documentation in R/buildXmat.R
 \name{buildXmat}
 \alias{buildXmat}
-\title{An auxialiary function to quickly construct the polyomial matrix, 
+\title{An auxialiary function to quickly construct the polyomial matrix,
 using Horner's rule}
 \usage{
 buildXmat(x, nc)
@@ -16,6 +16,6 @@ buildXmat(x, nc)
 A matrix with increasing powers of x in the columns
 }
 \description{
-An auxialiary function to quickly construct the polyomial matrix, 
+An auxialiary function to quickly construct the polyomial matrix,
 using Horner's rule
 }

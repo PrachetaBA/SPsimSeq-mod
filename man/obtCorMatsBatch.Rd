@@ -4,12 +4,14 @@
 \alias{obtCorMatsBatch}
 \title{A function to obtain copulas or uniform random variables}
 \usage{
-obtCorMatsBatch(cpm.data, batch)
+obtCorMatsBatch(cpm.data, batch, genewiseCor)
 }
 \arguments{
 \item{cpm.data}{the transformed data matrix}
 
 \item{batch}{the batch indicators}
+
+\item{genewiseCor}{logical, whther gene wise correlation needs to be simulated}
 }
 \value{
 The estimated correlation matrices per batch

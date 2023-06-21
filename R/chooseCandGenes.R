@@ -20,6 +20,7 @@
 #' @return a list object contating a set of candidate null and non-null genes and additional results
 #' @importFrom stats lm glm sd coef
 #' @importFrom utils combn
+#' @export 
 chooseCandGenes <- function(cpm.data, group, lfc.thrld, llStat.thrld, t.thrld, w =w,
                              max.frac.zeror.diff = Inf, pDE, n.genes, prior.count){
   # calculate fold-changes and t-statistics

@@ -12,7 +12,7 @@ evaluateDensities(SPobj, newData = names(SPobj$detailed.results$densList))
 \item{newData}{A character vector of gene names}
 }
 \value{
-a list of estimated densities, breaks and midpoints, one for every 
+a list of estimated densities, breaks and midpoints, one for every
 gene in newData
 }
 \description{
@@ -25,7 +25,7 @@ zhang.counts <- zhang.data.sub$counts
 MYCN.status  <- zhang.data.sub$MYCN.status
 # simulate data
 sim.data.bulk <- SPsimSeq(n.sim = 1, s.data = zhang.counts,
-                          group = MYCN.status, n.genes = 2000, batch.config = 1,
+                          group = MYCN.status, n.genes = 100, batch.config = 1,
                           group.config = c(0.5, 0.5), tot.samples = 20,
                           pDE = 0.1, lfc.thrld = 0.5, result.format = "list",
                           return.details = TRUE)
@@ -35,7 +35,7 @@ select.sample = sample(
 seq_along(sim.data.bulk$detailed.results$exprmt.design$sub.groups), 1)
 par(mfrow=c(2, 2))
 for(i in select.genes){
-     plot(outDens[[i]][[select.sample]]$mids, outDens[[i]][[select.sample]]$gy, type = "l", 
+     plot(outDens[[i]][[select.sample]]$mids, outDens[[i]][[select.sample]]$gy, type = "l",
      xlab = "Outcome", ylab = "Density", main = paste("Gene", i))
   }
 }

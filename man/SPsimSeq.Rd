@@ -50,9 +50,9 @@ SPsimSeq(
 
 \item{pDE}{a numeric value between 0 and 1 indicating the desired fraction of DE genes in the simulated data}
 
-\item{cand.DE.genes}{a list object contatining canidiate null and non-null (DE/predictor) genes.
+\item{cand.DE.genes}{a list object containing candidate null and non-null (DE/predictor) genes.
 If NULL (the default), an internal function determines candidate genes based on log-fold-change and other statistics.
-The user can also pass a list of canidate null and non-null genes (they must be disjoint). In particular, the list should contain
+The user can also pass a list of candidate null and non-null genes (they must be disjoint). In particular, the list should contain
 two character vectors (for the name of the features/genes in the source data) with names 'null.genes' and 'nonnull.genes'.
 For example, cand.DE.genes=list(null.genes=c('A', 'B'), nonnull.genes=c('C', 'D')).}
 
@@ -75,10 +75,10 @@ pDE>0 and cand.DE.genes is NULL)}
 
 \item{log.CPM.transform}{a logical value. If TRUE, the source data will be transformed into log-(CPM+const) before estimating the probability distributions}
 
-\item{lib.size.params}{NULL or a named numerical vector containing parameters for simulating library sizes from log-normal distribution. If lib.size.params =NULL (default), 
-then the package will fit a log-normal distribution for the library sizes in the source data to simulate new library sizes. 
-If the user would like to specify the parameters of the log-normal distribution for the desired library sizes, 
-then the log-mean and log-SD params of rlnorm() functions can be passed using this argument. 
+\item{lib.size.params}{NULL or a named numerical vector containing parameters for simulating library sizes from log-normal distribution. If lib.size.params =NULL (default),
+then the package will fit a log-normal distribution for the library sizes in the source data to simulate new library sizes.
+If the user would like to specify the parameters of the log-normal distribution for the desired library sizes,
+then the log-mean and log-SD params of rlnorm() functions can be passed using this argument.
 Example, lib.size.params = c(meanlog=10, sdlog=0.2). See also ?rlnorm.}
 
 \item{variable.lib.size}{a logical value. If FALSE (default), then the expected library sizes are simulated once and remains the same for every replication (if n.sim>1).}
@@ -135,16 +135,16 @@ estimate the probability distributions.
 #----------------------------------------------------------------
 # Example 1: simulating bulk RNA-seq
 
-# load the Zhang bulk RNA-seq data (availabl with the package)
+# load the Zhang bulk RNA-seq data (available with the package)
 data("zhang.data.sub")
 
 zhang.counts <- zhang.data.sub$counts
 MYCN.status  <- zhang.data.sub$MYCN.status
 
 # We simulate only a single data (n.sim = 1) with the following property
-# - 1000 genes ( n.genes = 1000)
-# - 40 samples (tot.samples = 40)
-# - the samples are equally divided into 2 groups each with 90 samples
+# - 100 genes ( n.genes = 100)
+# - 8 samples (tot.samples = 8)
+# - the samples are equally divided into 2 groups each with 4 samples
 #   (group.config = c(0.5, 0.5))
 # - all samples are from a single batch (batch = NULL, batch.config = 1)
 # - we add 10\% DE genes (pDE = 0.1)
@@ -152,24 +152,22 @@ MYCN.status  <- zhang.data.sub$MYCN.status
 #   the source data (lfc.thrld = 0.5)
 # - we do not model the zeroes separately, they are the part of density
 #    estimation (model.zero.prob = FALSE)
+# We keep the numbers of genes and samples low to limit compile time
 
 # simulate data
-set.seed(6452)
 sim.data.bulk <- SPsimSeq(n.sim = 1, s.data = zhang.counts,
-                          group = MYCN.status, n.genes = 1000, batch.config = 1,
-                          group.config = c(0.5, 0.5), tot.samples = 40,
+                          group = MYCN.status, n.genes = 50, batch.config = 1,
+                          group.config = c(0.5, 0.5), tot.samples = 8,
                           pDE = 0.1, lfc.thrld = 0.5, result.format = "list")
-
-head(sim.data.bulk$counts[[1]][, seq_len(5)])  # count data
-head(sim.data.bulk$colData)        # sample info
-head(sim.data.bulk$rowData)        # gene info
-
+head(sim.data.bulk[[1]]$counts[, seq_len(5)])  # count data
+head(sim.data.bulk[[1]]$colData)        # sample info
+head(sim.data.bulk[[1]]$rowData)        # gene info
 #----------------------------------------------------------------
 # Example 2: simulating single cell RNA-seq from a single batch (read-counts)
 # we simulate only a single scRNA-seq data (n.sim = 1) with the following property
-# - 2000 genes (n.genes = 2000)
-# - 100 cells (tot.samples = 100)
-# - the cells are equally divided into 2 groups each with 50 cells
+# - 100 genes (n.genes = 100)
+# - 6 cells (tot.samples = 6)
+# - the cells are equally divided into 2 groups each with 3 cells
 #   (group.config = c(0.5, 0.5))
 # - all cells are from a single batch (batch = NULL, batch.config = 1)
 # - we add 10\% DE genes (pDE = 0.1)
@@ -182,24 +180,12 @@ library(SingleCellExperiment)
 # load the NGP nutlin data (availabl with the package, processed with
 # SMARTer/C1 protocol, and contains read-counts)
 data("scNGP.data")
-
-# filter genes with sufficient expression (important step to avoid bugs)
 treatment <- ifelse(scNGP.data$characteristics..treatment=="nutlin",2,1)
-
-set.seed(654321)
-
 # simulate data (we simulate here only a single data, n.sim = 1)
 sim.data.sc <- SPsimSeq(n.sim = 1, s.data = scNGP.data, group = treatment,
- n.genes = 2000, batch.config = 1, group.config = c(0.5, 0.5), 
- tot.samples = 100, pDE = 0.1, lfc.thrld = 0.5, model.zero.prob = TRUE,
+ n.genes = 40, batch.config = 1, group.config = c(0.5, 0.5),
+ tot.samples = 6, pDE = 0.1, lfc.thrld = 0.5, model.zero.prob = TRUE,
                     result.format = "SCE")
-
-sim.data.sc1 <- sim.data.sc[[1]]
-class(sim.data.sc1)
-head(counts(sim.data.sc1)[, seq_len(5)])
-colData(sim.data.sc1)
-rowData(sim.data.sc1)
-
 }
 \references{
 \itemize{

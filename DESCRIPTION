@@ -42,7 +42,7 @@ Imports:
          phyloseq,
          utils
 biocViews: GeneExpression, RNASeq, SingleCell, Sequencing, DNASeq
-RoxygenNote: 7.1.0
+RoxygenNote: 7.2.3
 Suggests: 
     knitr,    
     rmarkdown,

@@ -7,9 +7,9 @@
 #' @param batch NULL or a vector containing batch indicators for each sample/cell in the source data
 #' @param group NULL or a vector containing group indicators for each sample/cell in the source data
 #' @param n.genes a numeric value for the total number of genes to be simulated
-#' @param cand.DE.genes a list object contatining canidiate null and non-null (DE/predictor) genes.
+#' @param cand.DE.genes a list object containing candidate null and non-null (DE/predictor) genes.
 #' If NULL (the default), an internal function determines candidate genes based on log-fold-change and other statistics.
-#' The user can also pass a list of canidate null and non-null genes (they must be disjoint). In particular, the list should contain
+#' The user can also pass a list of candidate null and non-null genes (they must be disjoint). In particular, the list should contain
 #' two character vectors (for the name of the features/genes in the source data) with names 'null.genes' and 'nonnull.genes'.
 #' For example, cand.DE.genes=list(null.genes=c('A', 'B'), nonnull.genes=c('C', 'D')).
 #' @param pDE a numeric value between 0 and 1 indicating the desired fraction of DE genes in the simulated data

@@ -6,6 +6,7 @@
 #'
 #' @return a normalized data matrix
 #' @importFrom edgeR calcNormFactors
+#' @export
 calculateCPM <- function(X, const.mult, prior.count){
     norm.factors = edgeR::calcNormFactors(X)*colSums(X)
     cpm = X %*% diag(1/(norm.factors)) * const.mult
