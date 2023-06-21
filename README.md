@@ -1,7 +1,7 @@
 SPsimSeq
 ================
 
-This is the github repo for the SPsimSeq R package.
+This is a fork of the github repo for the SPsimSeq R package.
 
 Overview
 ========
@@ -15,23 +15,8 @@ Github installation
 
 ``` r
 library(devtools)
-install_github("CenterForStatistics-UGent/SPsimSeq")
+install_github("PrachetaBA/SPsimSeq-mod")
 ```
-
-BioConductor installation
-
-``` r
-library(BiocManager)
-BiocManager::install("SPsimSeq")
-```
-
-``` r
-suppressPackageStartupMessages(library(SPsimSeq))
-cat("SPsimSeq package version", 
-    as.character(packageVersion("SPsimSeq")), "\n")
-```
-
-    ## SPsimSeq package version 0.99.0
 
 Demonstrations
 ==============
