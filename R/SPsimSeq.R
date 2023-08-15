@@ -198,7 +198,7 @@ SPsimSeq <- function(n.sim = 1, s.data, batch = rep(1, ncol(s.data)),
   }
   # Estimate batch specific densities
   if(verbose) {message("Estimating densities ...")}
-  densList <- lapply(allGenes, function(gene){
+  densList <- parallel::mclapply(allGenes, function(gene){
     geneParmEst(cpm.data.i = cpm.data[gene, ], batch = batch, group = group,
                 de.ind = gene %in% nonnull.genes0, prior.count = prior.count,
                 model.zero.prob = model.zero.prob, w = w)
@@ -212,14 +212,14 @@ SPsimSeq <- function(n.sim = 1, s.data, batch = rep(1, ncol(s.data)),
                                     group = group)
   ## PREPARE THE DENSITIES
   if(verbose) {message("Constructing densities ...")}
-  prepDens <- mclapply(allGenes, function(gene){
+  prepDens <- parallel::mclapply(allGenes, function(gene){
     constructDens(densList.ii = densList[[gene]],
                  DE.ind.ii = gene %in% nonnull.genes0,
                  exprmt.design = exprmt.design)
   })
   ## DATA GENERATION
   if(verbose) {message("Simulating data ...")}
-  sim.data.list <- mclapply(seq_len(n.sim), function(h){
+  sim.data.list <- parallel::mclapply(seq_len(n.sim), function(h){
     if(verbose) {message(" ...", h, " of ", n.sim)}
     #Sample libray sizes
     samLS <- if(variable.lib.size & log.CPM.transform){
