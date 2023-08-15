@@ -211,15 +211,15 @@ SPsimSeq <- function(n.sim = 1, s.data, batch = rep(1, ncol(s.data)),
                                     tot.samples = tot.samples, batch = batch,
                                     group = group)
   ## PREPARE THE DENSITIES
-  if(verbose) {message("Constructing Densities ...")}
-  prepDens <- lapply(allGenes, function(gene){
+  if(verbose) {message("Constructing densities ...")}
+  prepDens <- mclapply(allGenes, function(gene){
     constructDens(densList.ii = densList[[gene]],
                  DE.ind.ii = gene %in% nonnull.genes0,
                  exprmt.design = exprmt.design)
   })
   ## DATA GENERATION
   if(verbose) {message("Simulating data ...")}
-  sim.data.list <- lapply(seq_len(n.sim), function(h){
+  sim.data.list <- mclapply(seq_len(n.sim), function(h){
     if(verbose) {message(" ...", h, " of ", n.sim)}
     #Sample libray sizes
     samLS <- if(variable.lib.size & log.CPM.transform){

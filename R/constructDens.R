@@ -9,7 +9,7 @@
 #' @return The cumulative density
 constructDens = function(densList.ii, exprmt.design, DE.ind.ii, 
                          returnDens = FALSE){
-    lapply(seq_along(exprmt.design$sub.batchs), function(i){
+    mclapply(seq_along(exprmt.design$sub.batchs), function(i){ # multicore lapply
       batch = exprmt.design$sub.batchs[[i]]
       dl = if(DE.ind.ii){
         densList.ii[[batch]][[exprmt.design$sub.group[[i]]]]
