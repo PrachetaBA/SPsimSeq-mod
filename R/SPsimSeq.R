@@ -211,6 +211,7 @@ SPsimSeq <- function(n.sim = 1, s.data, batch = rep(1, ncol(s.data)),
                                     tot.samples = tot.samples, batch = batch,
                                     group = group)
   ## PREPARE THE DENSITIES
+  if(verbose) {message("Constructing Densities ...")}
   prepDens <- lapply(allGenes, function(gene){
     constructDens(densList.ii = densList[[gene]],
                  DE.ind.ii = gene %in% nonnull.genes0,
